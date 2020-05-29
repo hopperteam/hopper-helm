@@ -1,0 +1,14 @@
+ApiHost: api.test.hoppercloud.net
+ApiReplicas: 5
+UiHost: ui.test.hoppercloud.net
+UiReplicas: 5
+SsoCert: |
+    -----BEGIN PUBLIC KEY-----
+    ...
+    -----END PUBLIC KEY-----
+LoginUrl: https://account.hoppercloud.net
+MongoHost: "mongodb"
+MongoUser: "hopper-test"
+MongoPassword: "123"
+MongoDb: "hopper-test"
+PermissionNamespace: "HopperTest"

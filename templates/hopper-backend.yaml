@@ -1,0 +1,97 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ .Release.Name }}-hopper-api
+  labels:
+    app: {{ .Release.Name }}-hopper-api
+spec:
+  ports:
+    - port: 80
+  selector:
+    app: {{ .Release.Name }}-hopper-api
+    tier: api
+---
+apiVersion: networking.k8s.io/v1beta1
+kind: Ingress
+metadata:
+  name: {{ .Release.Name }}-hopper-api-ingress
+  annotations:
+    cert-manager.io/issuer: "letsencrypt-prod"
+
+spec:
+  tls:
+  - hosts:
+    - {{ .Values.ApiHost }}
+    secretName: {{ .Release.Name }}-hopper-api-tls
+  rules:
+    - host: {{ .Values.ApiHost }}
+      http:
+        paths:
+        - backend:
+            serviceName: {{ .Release.Name }}-hopper-api
+            servicePort: 80
+---
+apiVersion: apps/v1 
+kind: Deployment
+metadata:
+  name: {{ .Release.Name }}-hopper-api
+  labels:
+    app: {{ .Release.Name }}-hopper-api
+spec:
+  replicas: {{ .Values.ApiReplicas }}
+  selector:
+    matchLabels:
+      app: {{ .Release.Name }}-hopper-api
+      tier: api
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      labels:
+        app: {{ .Release.Name }}-hopper-api
+        tier: api
+    spec:
+      containers:
+      - image: lucaschimweg/hopper-server:dev-35
+        name: {{ .Release.Name }}-hopper-api
+        ports:
+        - containerPort: 80
+          name: {{ .Release.Name }}-hopper-api
+        volumeMounts:
+        - name: {{ .Release.Name }}-hopper-api-config-volume
+          mountPath: /var/hopper
+        - name: {{ .Release.Name }}-hopper-sso-volume
+          mountPath: /var/hopperjwt
+      volumes:
+      - name: {{ .Release.Name }}-hopper-api-config-volume
+        configMap:
+          name: {{ .Release.Name }}-hopper-api-config
+      - name: {{ .Release.Name }}-hopper-sso-volume
+        secret:
+          secretName: {{ .Release.Name }}-hopper-sso-cert
+---
+apiVersion: v1
+kind: Secret
+metadata:
+    name: {{ .Release.Name }}-hopper-sso-cert
+type: Opaque
+data:
+    rsa.public: {{ .Values.SsoCert | b64enc }}
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+    name: {{ .Release.Name }}-hopper-api-config
+data:
+    config.json: '
+    {
+        "dbHost": "{{ .Values.MongoHost }}",
+        "dbUser": "{{ .Values.MongoUser }}",
+        "dbPassword": "{{ .Values.MongoPassword }}",
+        "dbName": "{{ .Values.MongoDb }}",
+        "port": "80",
+        "startBackend": true,
+        "startMonitoring": true,
+        "jwtCertPath": "/var/hopperjwt/rsa.public",
+        "permissionNamespace": "{{ .Values.PermissionNamespace }}"
+    }'

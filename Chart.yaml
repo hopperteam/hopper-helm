@@ -1,0 +1,8 @@
+apiVersion: v2
+name: hopper
+version: 0.3.1
+sources:
+  - https://github.com/hopperteam
+maintainers: 
+  - name: The hopper team
+    url: https://github.com/hopperteam
