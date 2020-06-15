@@ -38,7 +38,6 @@ metadata:
   labels:
     app: {{ .Release.Name }}-hopper-api
 spec:
-  replicas: {{ .Values.ApiReplicas }}
   selector:
     matchLabels:
       app: {{ .Release.Name }}-hopper-api

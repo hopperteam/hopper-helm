@@ -1,5 +1,4 @@
 ApiHost: api.test.hoppercloud.net
-ApiReplicas: 5
 UiHost: ui.test.hoppercloud.net
 UiReplicas: 5
 SsoCert: |
