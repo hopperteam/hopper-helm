@@ -4,7 +4,13 @@ UiHost: ui.test.hoppercloud.net
 UiReplicas: 5
 SsoCert: |
     -----BEGIN PUBLIC KEY-----
-    ...
+    MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAuwEPQddaJkWTI/+hAAOc
+    Q7w0K4+ZY9cZYEJvGChZoMZqEFlbnoZeHOmuONWacofMF9htsuqDHEoDGWJHWnc9
+    IjM64jz5Q3Q+NMMMfy9LrOxd45/6rIfJDe25keK9nYlC4arcDn1vdO2g3DyySBSu
+    MF/bJ9DxFn43dai6odEQyEypFjLXEYcUi/uv5WF+hh8R3fx396oZ0efwiNBQnCbn
+    q5cD1DRPL1gU/zj1iOpYcjhHtyUh2hHwzAoHIrRXp1QrEK2vLAcicMUYJX/VxHmU
+    a3qYAJ8nBAUAkrf+wPE0eUpOxc6O7KYPM3Yf8ylVPXkr7c9LfnCXsMFZL8LZnAiZ
+    WwIDAQAB
     -----END PUBLIC KEY-----
 LoginUrl: https://account.hoppercloud.net
 MongoHost: "mongodb"
