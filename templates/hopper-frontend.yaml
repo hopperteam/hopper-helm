@@ -52,7 +52,7 @@ spec:
         tier: frontend
     spec:
       containers:
-      - image: lucaschimweg/hopper-ui:dev-27
+      - image: lucaschimweg/hopper-ui:dev-32
         name: {{.Release.Name}}-hopper-ui
         ports:
         - containerPort: 80

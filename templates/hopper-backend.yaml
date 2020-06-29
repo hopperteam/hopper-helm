@@ -51,7 +51,7 @@ spec:
         tier: api
     spec:
       containers:
-      - image: lucaschimweg/hopper-server:dev-35
+      - image: lucaschimweg/hopper-server:release-1
         name: {{ .Release.Name }}-hopper-api
         ports:
         - containerPort: 80
